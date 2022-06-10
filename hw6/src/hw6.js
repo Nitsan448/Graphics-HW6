@@ -137,11 +137,23 @@ const thirdCurve = new THREE.QuadraticBezierCurve3(
 );
 
 //For Debugging
-const firstCurvePoints = firstCurve.getPoints( 5000 );
-const geometry = new THREE.BufferGeometry().setFromPoints( firstCurvePoints );
-const material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
-const curveObject = new THREE.Line( geometry, material );
-scene.add(curveObject)
+let firstCurvePoints = firstCurve.getPoints( 500 );
+let geometry = new THREE.BufferGeometry().setFromPoints( firstCurvePoints );
+let material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+let curveObject1 = new THREE.Line( geometry, material );
+scene.add(curveObject1)
+firstCurvePoints = secondCurve.getPoints( 500 );
+geometry = new THREE.BufferGeometry().setFromPoints( firstCurvePoints );
+material = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
+let curveObject2 = new THREE.Line( geometry, material );
+scene.add(curveObject2)
+firstCurvePoints = thirdCurve.getPoints( 500 );
+geometry = new THREE.BufferGeometry().setFromPoints( firstCurvePoints );
+material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+let curveObject3 = new THREE.Line( geometry, material );
+scene.add(curveObject3)
+
+const curves = [firstCurve,secondCurve,thirdCurve];
 
 // TODO: Camera Settings
 // Set the camera following the spaceship here
@@ -174,9 +186,20 @@ camera.lookAt( earthSphere.position );
 // We wrote some of the function for you
 const handle_keydown = (e) => {
 	if(e.code == 'ArrowLeft'){
-		// TODO
+		if(currentCurveIndex == 0){
+			currentCurveIndex = curves.length - 1
+		}
+		else{
+			currentCurveIndex--
+		}
 	} else if (e.code == 'ArrowRight'){
-		// TODO
+		if(currentCurveIndex == curves.length - 1){
+			currentCurveIndex = 0
+		}
+		else{
+			currentCurveIndex++
+		}
+
 	}
 }
 document.addEventListener('keydown', handle_keydown);
@@ -184,6 +207,7 @@ document.addEventListener('keydown', handle_keydown);
 let i = 0;
 let t;
 const numberOfSegments = 1000;
+let currentCurveIndex = 0;
 
 function animate() {
 
@@ -191,7 +215,7 @@ function animate() {
 
 	// TODO: Animation for the spaceship position
 	t = i / numberOfSegments;
-	const nextPosition = firstCurve.getPoint(t)
+	const nextPosition = curves[currentCurveIndex].getPoint(t)
 	const newLocationTranslation = new THREE.Vector3(nextPosition.x - Spaceship.position.x, nextPosition.y - Spaceship.position.y, nextPosition.z - Spaceship.position.z)
 	Spaceship.applyMatrix4(new THREE.Matrix4().makeTranslation(newLocationTranslation.x  ,newLocationTranslation.y,newLocationTranslation.z))
 	//Spaceship.applyMatrix4(new THREE.Matrix4().makeTranslation(newLocationTranslation));
