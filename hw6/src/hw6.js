@@ -37,9 +37,9 @@ renderer.render( scene, camera );
 // TODO: Texture Loading
 // We usually do the texture loading before we start everything else, as it might take processing time
 const spaceLoader = new THREE.TextureLoader();
-const earthTexture = spaceLoader.load("./textures/earth.jpg");
-const moonTexture = spaceLoader.load("./textures/moon.jpg");
-const startTexture = spaceLoader.load("./textures/start.jpg");
+const earthTexture = spaceLoader.load("src/textures/earth.jpg");
+const moonTexture = spaceLoader.load("src/textures/moon.jpg");
+const startTexture = spaceLoader.load("src/textures/star.jpg");
 
 
 // TODO: Add Lighting
@@ -114,8 +114,8 @@ const moonSphere = new THREE.Mesh(moonGeometry, moonMaterial);
 console.log(moonSphere)
 
 const earthGeometry = new THREE.SphereGeometry(10);
-const earthMaterial = new THREE.MeshBasicMaterial( {color: 0xbbbbbb} );
-const earthSphere = new THREE.Mesh(moonGeometry, moonMaterial);
+const earthMaterial = new THREE.MeshBasicMaterial( {map:earthTexture} );
+const earthSphere = new THREE.Mesh(earthGeometry, earthMaterial);
 earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 
 // TODO: Bezier Curves
