@@ -135,7 +135,7 @@ const thirdCurve = new THREE.QuadraticBezierCurve3(
 	new THREE.Vector3( 70, -5, 70 ),
 	earthSphere.position
 );
-
+const curves = [firstCurve,secondCurve,thirdCurve];
 //For Debugging
 const firstCurvePoints = firstCurve.getPoints( 5000 );
 const geometry = new THREE.BufferGeometry().setFromPoints( firstCurvePoints );
@@ -149,13 +149,23 @@ scene.add(curveObject)
 
 // TODO: Add collectible stars
 class Star{
-	constructor(curveIndex,t){
-		this.curveIndex = curveIndex;
+	constructor(curveNumber,t){
+		this.curveIndex = curveNumber -1;
 		this.t = t;
-		const geomtry = new THREE.DodecahedronGeometry(10,0);
+		const geomtry = new THREE.DodecahedronGeometry(2.5,0);
 		const material = new THREE.MeshPhongMaterial({map: startTexture});
-		this.three = new THREE.Mesh(geomtry,material);
+		this.star = new THREE.Mesh(geomtry,material);
 		
+		const curveLocation = curves[this.curveIndex].getPoint(this.t);
+		console.log(curveLocation);
+		const newLocationTranslation = new THREE.Vector3(curveLocation.x, curveLocation.y, curveLocation.z)
+		this.star.applyMatrix4(new THREE.Matrix4().makeTranslation(newLocationTranslation.x  ,newLocationTranslation.y,newLocationTranslation.z))
+		scene.add(this.star);
+		
+	}
+
+	collision(){
+		this.star.visible = false;
 	}
 }
 
@@ -199,7 +209,6 @@ function animate() {
 	spotLight.position.set(Spaceship.position.x, Spaceship.position.y + 10, Spaceship.position.z)
 	
 	// TODO: Test for star-spaceship collision
-
 	
 	renderer.render( scene, camera );
 
