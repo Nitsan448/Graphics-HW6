@@ -112,15 +112,11 @@ Spaceship.add(Head,Hull,Window,SecondWindow,Wing,Wing2,Wing3);
 //Moon is at 0,0,0
 
 const moonGeometry = new THREE.SphereGeometry(10);
-const moonMaterial = new THREE.MeshPhongMaterial();
+const moonMaterial = new THREE.MeshPhongMaterial({map:moonTexture});
 const moonSphere = new THREE.Mesh(moonGeometry, moonMaterial);
 
 const earthGeometry = new THREE.SphereGeometry(10);
-<<<<<<< HEAD
-const earthMaterial = new THREE.MeshBasicMaterial( {map:earthTexture} );
-=======
-const earthMaterial = new THREE.MeshPhongMaterial();
->>>>>>> 5bea6fbfef0ed3405eb5fc019a5d2bc487c42d01
+const earthMaterial = new THREE.MeshPhongMaterial({map:earthTexture});
 const earthSphere = new THREE.Mesh(earthGeometry, earthMaterial);
 earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 
@@ -137,7 +133,7 @@ earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 scene.add(Spaceship);
 scene.add(moonSphere);
 scene.add(earthSphere);
-camera.lookAt( moonSphere.position );
+camera.lookAt( earthSphere.position );
 
 // TODO: Add keyboard event
 // We wrote some of the function for you
