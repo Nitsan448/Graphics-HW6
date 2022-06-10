@@ -46,7 +46,7 @@ const startTexture = spaceLoader.load("./textures/start.jpg");
 const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
 scene.add( directionalLight );
 const spotLight = new THREE.SpotLight( 0xffffff );
-spotLight.position.set( 100, 1000, 100 );
+spotLight.position.set( 50, 5, 50);
 
 //Spaceship
 const geometry_head = new THREE.ConeGeometry(1,3,10);
@@ -104,7 +104,8 @@ const SecondWindow = Window.clone();
 Window.applyMatrix4(windowTranslationY);
 SecondWindow.applyMatrix4(secondWindowTranlationY);
 
-Spaceship.add(Head,Hull,Window,SecondWindow,Wing,Wing2,Wing3);
+Spaceship.add(Head,Hull,Window,SecondWindow,Wing,Wing2,Wing3, spotLight);
+Spaceship.applyMatrix4(new THREE.Matrix4().makeTranslation(50,2.5,50))
 
 // TODO: Planets
 // You should add both earth and the moon here
