@@ -37,9 +37,9 @@ renderer.render( scene, camera );
 // TODO: Texture Loading
 // We usually do the texture loading before we start everything else, as it might take processing time
 const spaceLoader = new THREE.TextureLoader();
-const earthTexture = spaceLoader.load("./textures/earth.jpg");
-const moonTexture = spaceLoader.load("./textures/moon.jpg");
-const startTexture = spaceLoader.load("./textures/start.jpg");
+const earthTexture = spaceLoader.load("src/textures/earth.jpg");
+const moonTexture = spaceLoader.load("src/textures/moon.jpg");
+const startTexture = spaceLoader.load("src/textures/star.jpg");
 
 
 // TODO: Add Lighting
@@ -113,11 +113,11 @@ Spaceship.applyMatrix4(new THREE.Matrix4().makeTranslation(50,2.5,50))
 //Moon is at 0,0,0
 
 const moonGeometry = new THREE.SphereGeometry(10);
-const moonMaterial = new THREE.MeshPhongMaterial();
+const moonMaterial = new THREE.MeshPhongMaterial({map:moonTexture});
 const moonSphere = new THREE.Mesh(moonGeometry, moonMaterial);
 
 const earthGeometry = new THREE.SphereGeometry(10);
-const earthMaterial = new THREE.MeshPhongMaterial();
+const earthMaterial = new THREE.MeshPhongMaterial({map:earthTexture});
 const earthSphere = new THREE.Mesh(earthGeometry, earthMaterial);
 earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 
@@ -134,7 +134,7 @@ earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 scene.add(Spaceship);
 scene.add(moonSphere);
 scene.add(earthSphere);
-camera.lookAt( moonSphere.position );
+camera.lookAt( earthSphere.position );
 
 // TODO: Add keyboard event
 // We wrote some of the function for you
