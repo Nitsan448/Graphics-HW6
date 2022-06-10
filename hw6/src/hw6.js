@@ -29,7 +29,7 @@ const texture = loader.load([
 scene.background = texture;
 
 const cameraTranslate = new THREE.Matrix4();
-cameraTranslate.makeTranslation(0,0,5);
+cameraTranslate.makeTranslation(0, 100, 200);
 camera.applyMatrix4(cameraTranslate)
 
 renderer.render( scene, camera );
@@ -42,9 +42,7 @@ renderer.render( scene, camera );
 // TODO: Add Lighting
 
 
-// TODO: Spaceship
-// You should copy-paste the spaceship from the previous exercise here
-//Head
+//Spaceship
 const geometry_head = new THREE.ConeGeometry(1,3,10);
 const material_head = new THREE.MeshBasicMaterial( {color: 0x0ca00a} );
 const Head = new THREE.Mesh(geometry_head,material_head);
@@ -102,11 +100,20 @@ SecondWindow.applyMatrix4(secondWindowTranlationY);
 
 Spaceship.add(Head,Hull,Window,SecondWindow,Wing,Wing2,Wing3);
 
-scene.add(Spaceship);
-
 // TODO: Planets
 // You should add both earth and the moon here
+//Earth is at 100,5,100.
+//Moon is at 0,0,0
 
+const moonGeometry = new THREE.SphereGeometry(10);
+const moonMaterial = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+const moonSphere = new THREE.Mesh(moonGeometry, moonMaterial);
+console.log(moonSphere)
+
+const earthGeometry = new THREE.SphereGeometry(10);
+const earthMaterial = new THREE.MeshBasicMaterial( {color: 0xbbbbbb} );
+const earthSphere = new THREE.Mesh(moonGeometry, moonMaterial);
+earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 
 // TODO: Bezier Curves
 
@@ -117,6 +124,13 @@ scene.add(Spaceship);
 
 // TODO: Add collectible stars
 
+
+scene.add(Spaceship);
+scene.add(moonSphere);
+scene.add(earthSphere);
+console.log(camera)
+camera.lookAt( moonSphere.position );
+console.log(camera)
 
 // TODO: Add keyboard event
 // We wrote some of the function for you
