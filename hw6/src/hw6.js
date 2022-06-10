@@ -178,6 +178,9 @@ class Star{
 	testCollision(curveIndex){
 		if(this.curveIndex === curveIndex){
 			this.star.visible = false;
+			return true;
+		} else{
+			return false;
 		}
 	}
 }
@@ -185,8 +188,8 @@ class Star{
 const starMap = new Map();
 starMap.set(0.2,new Star(1,0.2))
 starMap.set(0.4,new Star(2,0.4))
-starMap.set(0.8,new Star(3,0.8))
 starMap.set(0.5,new Star(1,0.5))
+starMap.set(0.8,new Star(3,0.8))
 
 scene.add(Spaceship);
 scene.add(moonSphere);
@@ -219,6 +222,7 @@ let i = 0;
 let t;
 const numberOfSegments = 1000;
 let currentCurveIndex = 0;
+let userPoints = 0;
 
 function animate() {
 
@@ -233,18 +237,19 @@ function animate() {
 	spotLight.position.set(Spaceship.position.x, Spaceship.position.y + 10, Spaceship.position.z)
 	
 	// TODO: Test for star-spaceship collision
-<<<<<<< HEAD
 	if(starMap.has(t)){
-		const star = starMap(t).star;
-		star.testCollision(currentCurveIndex);
+		console.log(t);
+		console.log("inside check collision");
+		const star = starMap.get(t);
+		if(star.testCollision(currentCurveIndex)){
+			userPoints++;
+		};
 	}
 	
-=======
 	//camera.position.set(curves[currentCurveIndex].getPoint(t))
 	camera.position.set(Spaceship.position.x -20, Spaceship.position.y + 5, Spaceship.position.z-20)
 	camera.lookAt(Spaceship.position)
 
->>>>>>> 90ba25cc82db5c225a1585a3e1ac053dc814ae9b
 	renderer.render( scene, camera );
 
 }
