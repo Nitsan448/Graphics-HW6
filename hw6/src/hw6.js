@@ -46,7 +46,6 @@ const startTexture = spaceLoader.load("src/textures/star.jpg");
 const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
 scene.add( directionalLight );
 const spotLight = new THREE.SpotLight( 0xffffff );
-spotLight.position.set( 50, 5, 50);
 
 //Spaceship
 const geometry_head = new THREE.ConeGeometry(1,3,10);
@@ -105,13 +104,10 @@ Window.applyMatrix4(windowTranslationY);
 SecondWindow.applyMatrix4(secondWindowTranlationY);
 
 Spaceship.add(Head,Hull,Window,SecondWindow,Wing,Wing2,Wing3, spotLight);
-Spaceship.applyMatrix4(new THREE.Matrix4().makeTranslation(50,2.5,50))
+spotLight.target = Spaceship
 
-// TODO: Planets
-// You should add both earth and the moon here
-//Earth is at 100,5,100.
-//Moon is at 0,0,0
 
+//Planets
 const moonGeometry = new THREE.SphereGeometry(10);
 const moonMaterial = new THREE.MeshPhongMaterial({map:moonTexture});
 const moonSphere = new THREE.Mesh(moonGeometry, moonMaterial);
@@ -122,7 +118,30 @@ const earthSphere = new THREE.Mesh(earthGeometry, earthMaterial);
 earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 
 // TODO: Bezier Curves
+const firstCurve = new THREE.QuadraticBezierCurve3(
+	moonSphere.position,
+	new THREE.Vector3( 0, 5, 40 ),
+	earthSphere.position
+);
 
+const secondCurve = new THREE.QuadraticBezierCurve3(
+	moonSphere.position,
+	new THREE.Vector3( 50, 0, 50 ),
+	earthSphere.position
+);
+
+const thirdCurve = new THREE.QuadraticBezierCurve3(
+	moonSphere.position,
+	new THREE.Vector3( 70, -5, 70 ),
+	earthSphere.position
+);
+
+//For Debugging
+const firstCurvePoints = firstCurve.getPoints( 5000 );
+const geometry = new THREE.BufferGeometry().setFromPoints( firstCurvePoints );
+const material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+const curveObject = new THREE.Line( geometry, material );
+scene.add(curveObject)
 
 // TODO: Camera Settings
 // Set the camera following the spaceship here
@@ -162,15 +181,23 @@ const handle_keydown = (e) => {
 }
 document.addEventListener('keydown', handle_keydown);
 
-
+let i = 0;
+let t;
+const numberOfSegments = 1000;
 
 function animate() {
 
 	requestAnimationFrame( animate );
 
 	// TODO: Animation for the spaceship position
-
-
+	t = i / numberOfSegments;
+	const nextPosition = firstCurve.getPoint(t)
+	const newLocationTranslation = new THREE.Vector3(nextPosition.x - Spaceship.position.x, nextPosition.y - Spaceship.position.y, nextPosition.z - Spaceship.position.z)
+	Spaceship.applyMatrix4(new THREE.Matrix4().makeTranslation(newLocationTranslation.x  ,newLocationTranslation.y,newLocationTranslation.z))
+	//Spaceship.applyMatrix4(new THREE.Matrix4().makeTranslation(newLocationTranslation));
+	i++
+	spotLight.position.set(Spaceship.position.x, Spaceship.position.y + 10, Spaceship.position.z)
+	
 	// TODO: Test for star-spaceship collision
 
 	
