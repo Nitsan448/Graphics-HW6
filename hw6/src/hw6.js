@@ -153,7 +153,6 @@ material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
 let curveObject3 = new THREE.Line( geometry, material );
 scene.add(curveObject3)
 
-const curves = [firstCurve,secondCurve,thirdCurve];
 
 // TODO: Camera Settings
 // Set the camera following the spaceship here
@@ -176,8 +175,10 @@ class Star{
 		
 	}
 
-	collision(){
-		this.star.visible = false;
+	testCollision(curveIndex){
+		if(this.curveIndex === curveIndex){
+			this.star.visible = false;
+		}
 	}
 }
 
@@ -228,11 +229,14 @@ function animate() {
 	const nextPosition = curves[currentCurveIndex].getPoint(t)
 	const newLocationTranslation = new THREE.Vector3(nextPosition.x - Spaceship.position.x, nextPosition.y - Spaceship.position.y, nextPosition.z - Spaceship.position.z)
 	Spaceship.applyMatrix4(new THREE.Matrix4().makeTranslation(newLocationTranslation.x  ,newLocationTranslation.y,newLocationTranslation.z))
-	//Spaceship.applyMatrix4(new THREE.Matrix4().makeTranslation(newLocationTranslation));
 	i++
 	spotLight.position.set(Spaceship.position.x, Spaceship.position.y + 10, Spaceship.position.z)
 	
 	// TODO: Test for star-spaceship collision
+	if(starMap.has(t)){
+		const star = starMap(t).star;
+		star.testCollision(currentCurveIndex);
+	}
 	
 	renderer.render( scene, camera );
 
