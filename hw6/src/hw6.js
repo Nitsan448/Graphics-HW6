@@ -122,8 +122,20 @@ const earthSphere = new THREE.Mesh(earthGeometry, earthMaterial);
 earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 
 // TODO: Bezier Curves
+const curve = new THREE.QuadraticBezierCurve3(
+	earthSphere.position,
+	new THREE.Vector3( 0, 5, 40 ),
+	moonSphere.position
+);
 
+const points = curve.getPoints( 50 );
+const geometry = new THREE.BufferGeometry().setFromPoints( points );
 
+const material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+
+// Create the final object to add to the scene
+const curveObject = new THREE.Line( geometry, material );
+scene.add(curveObject)
 // TODO: Camera Settings
 // Set the camera following the spaceship here
 
