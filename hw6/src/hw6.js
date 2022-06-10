@@ -252,5 +252,9 @@ function animate() {
 
 	renderer.render( scene, camera );
 
+	if(t === 1){
+		alert(`You earned ${userPoints}`);
+	}
+
 }
 animate()
