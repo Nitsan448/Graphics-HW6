@@ -129,7 +129,22 @@ earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 
 
 // TODO: Add collectible stars
+class Star{
+	constructor(curveIndex,t){
+		this.curveIndex = curveIndex;
+		this.t = t;
+		const geomtry = new THREE.DodecahedronGeometry(10,0);
+		const material = new THREE.MeshPhongMaterial({map: startTexture});
+		this.three = new THREE.Mesh(geomtry,material);
+		
+	}
+}
 
+const starMap = new Map();
+starMap.set(0.2,new Star(1,0.2))
+starMap.set(0.4,new Star(2,0.4))
+starMap.set(0.8,new Star(3,0.8))
+starMap.set(0.5,new Star(1,0.5))
 
 scene.add(Spaceship);
 scene.add(moonSphere);
