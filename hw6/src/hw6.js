@@ -36,7 +36,10 @@ renderer.render( scene, camera );
 
 // TODO: Texture Loading
 // We usually do the texture loading before we start everything else, as it might take processing time
-
+const spaceLoader = new THREE.TextureLoader();
+const earthTexture = spaceLoader.load("./textures/earth.jpg");
+const moonTexture = new spaceLoader.TextureLoader().load("./textures/moon.jpg");
+const startTexture = new spaceLoader.TextureLoader().load("./textures/start.jpg");
 
 
 // TODO: Add Lighting
