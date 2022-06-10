@@ -233,11 +233,18 @@ function animate() {
 	spotLight.position.set(Spaceship.position.x, Spaceship.position.y + 10, Spaceship.position.z)
 	
 	// TODO: Test for star-spaceship collision
+<<<<<<< HEAD
 	if(starMap.has(t)){
 		const star = starMap(t).star;
 		star.testCollision(currentCurveIndex);
 	}
 	
+=======
+	//camera.position.set(curves[currentCurveIndex].getPoint(t))
+	camera.position.set(Spaceship.position.x -20, Spaceship.position.y + 5, Spaceship.position.z-20)
+	camera.lookAt(Spaceship.position)
+
+>>>>>>> 90ba25cc82db5c225a1585a3e1ac053dc814ae9b
 	renderer.render( scene, camera );
 
 }
