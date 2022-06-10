@@ -168,7 +168,6 @@ class Star{
 		this.star = new THREE.Mesh(geomtry,material);
 		
 		const curveLocation = curves[this.curveIndex].getPoint(this.t);
-		console.log(curveLocation);
 		const newLocationTranslation = new THREE.Vector3(curveLocation.x, curveLocation.y, curveLocation.z)
 		this.star.applyMatrix4(new THREE.Matrix4().makeTranslation(newLocationTranslation.x  ,newLocationTranslation.y,newLocationTranslation.z))
 		scene.add(this.star);
@@ -238,8 +237,6 @@ function animate() {
 	
 	// TODO: Test for star-spaceship collision
 	if(starMap.has(t)){
-		console.log(t);
-		console.log("inside check collision");
 		const star = starMap.get(t);
 		if(star.testCollision(currentCurveIndex)){
 			userPoints++;
