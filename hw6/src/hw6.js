@@ -43,22 +43,25 @@ const startTexture = spaceLoader.load("src/textures/star.jpg");
 
 
 // TODO: Add Lighting
-
+const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+scene.add( directionalLight );
+const spotLight = new THREE.SpotLight( 0xffffff );
+spotLight.position.set( 100, 1000, 100 );
 
 //Spaceship
 const geometry_head = new THREE.ConeGeometry(1,3,10);
-const material_head = new THREE.MeshBasicMaterial( {color: 0x0ca00a} );
+const material_head = new THREE.MeshPhongMaterial( {color: 0x0ca00a} );
 const Head = new THREE.Mesh(geometry_head,material_head);
 
 const geometryHull = new THREE.CylinderGeometry( 1, 1, 3,10);
-const materialHull = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+const materialHull = new THREE.MeshPhongMaterial( {color: 0xffff00} );
 const Hull = new THREE.Mesh(geometryHull,materialHull);
 
 const geometryWindow = new THREE.RingGeometry( 2, 3, 32 );
-const materialWindow = new THREE.MeshBasicMaterial( { color: 0xff0000, side: THREE.DoubleSide } );
+const materialWindow = new THREE.MeshPhongMaterial( { color: 0xff0000, side: THREE.DoubleSide } );
 const Window = new THREE.Mesh( geometryWindow, materialWindow );
 
-const materialWing = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+const materialWing = new THREE.MeshPhongMaterial( {color: 0xff0000} );
 materialWing.side= THREE.DoubleSide;
 const geometryWing = new THREE.BufferGeometry();
 const verticesWing = new Float32Array([
@@ -109,12 +112,15 @@ Spaceship.add(Head,Hull,Window,SecondWindow,Wing,Wing2,Wing3);
 //Moon is at 0,0,0
 
 const moonGeometry = new THREE.SphereGeometry(10);
-const moonMaterial = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+const moonMaterial = new THREE.MeshPhongMaterial();
 const moonSphere = new THREE.Mesh(moonGeometry, moonMaterial);
-console.log(moonSphere)
 
 const earthGeometry = new THREE.SphereGeometry(10);
+<<<<<<< HEAD
 const earthMaterial = new THREE.MeshBasicMaterial( {map:earthTexture} );
+=======
+const earthMaterial = new THREE.MeshPhongMaterial();
+>>>>>>> 5bea6fbfef0ed3405eb5fc019a5d2bc487c42d01
 const earthSphere = new THREE.Mesh(earthGeometry, earthMaterial);
 earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 
@@ -131,9 +137,7 @@ earthSphere.applyMatrix4(new THREE.Matrix4().makeTranslation(100, 5, 100));
 scene.add(Spaceship);
 scene.add(moonSphere);
 scene.add(earthSphere);
-console.log(camera)
 camera.lookAt( moonSphere.position );
-console.log(camera)
 
 // TODO: Add keyboard event
 // We wrote some of the function for you
